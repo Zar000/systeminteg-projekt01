@@ -53,21 +53,22 @@ id int not null auto_increment primary key,
 name varchar(30) not null,
 brand int not null,
 cost float not null,
-sizeType ENUM('num','str','char') not null,
+size varchar(30) not null,
+color varchar(30) not null,
 created timestamp default CURRENT_TIMESTAMP,
 lastUpdate timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 foreign key(brand) references brand(id)
 );
 
-insert into item(name, brand, cost, sizeType) values 
-('Socks',(select id from brand where name = 'PUMA'),'49','num'),
-('Sneakers',(select id from brand where name = 'Adidas'),'1249','num'),
-('Bra',(select id from brand where name = 'Adidas'),'199','str'),
-('Boxers',(select id from brand where name = 'PUMA'),'49','num'),
-('Dress',(select id from brand where name = 'Gucci'),'749','char'),
-('Shirt',(select id from brand where name = 'Gant'),'699','char'),
-('Hoodie',(select id from brand where name = 'Gymshark'),'299','char'),
-('T-shirt',(select id from brand where name = 'Gymshark'),'449','char');
+insert into item(name, brand, cost, size, color) values 
+('Sport Socks',(select id from brand where name = 'PUMA'),'49','39-42','White'),
+('Sleekers',(select id from brand where name = 'Adidas'),'1249','42-45','Red & Black'),
+('Sport Bra',(select id from brand where name = 'Adidas'),'199','B35','Black'),
+('Comfort Boxers',(select id from brand where name = 'PUMA'),'49','M','Orange'),
+('Elegant Dress',(select id from brand where name = 'Gucci'),'749','S','Yellow'),
+('Business Shirt',(select id from brand where name = 'Gant'),'699','L','White'),
+('Cozy Hoodie',(select id from brand where name = 'Gymshark'),'299','XL','Red'),
+('Punk T-shirt',(select id from brand where name = 'Gymshark'),'449','M','Purple');
 
 
 create table orders(
@@ -77,8 +78,6 @@ created timestamp default CURRENT_TIMESTAMP,
 lastUpdate timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 foreign key(customerid) references customer(id)
 );
-
-
 
 insert into orders(customerid) values
 ((select id from customer where name = 'Casper')),
@@ -92,17 +91,11 @@ select * from orders;
 create table orderItems(
 orderId int not null,
 itemId int not null,
-itemSize varchar(30) not null,
-itemColor enum ('White','Black','Red','Yellow','Green','Purple') not null,
 created timestamp default CURRENT_TIMESTAMP,
 lastUpdate timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 foreign key(orderId) references orders(id),
 foreign key(itemId) references item(id)
 );
-
-# WIP, måste förmodligen göra om mina tables
-#insert into orderItems(orderId, itemId, itemSize, itemColor) values
-#('1','1','L','White');
 
 
 select * from orderitems;
