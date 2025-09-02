@@ -46,7 +46,15 @@ insert into type(name) values
 ('Autumn'),
 ('Jacket'),
 ('Mens'),
-('Womens');
+('Womens')
+('Socks'),
+('Sneakers'),
+('Bra'),
+('Boxers'),
+('Dress'),
+('Shirt'),
+('Hoodie'),
+('T-Shirt');
 
 create table item(
 id int not null auto_increment primary key,
