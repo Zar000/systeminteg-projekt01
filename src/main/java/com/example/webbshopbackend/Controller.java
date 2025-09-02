@@ -9,24 +9,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     int num;
-    String textUsr;
     String[] animals = {"Cat", "Dog", "Fish", "Horse", "Lion", "Spider", "Tiger", "Wolf", "Zebra", "Elephant"};
 
     @RequestMapping("/luckyYou")
-    public String getAnim(@RequestParam String text) {
+    public String getAnim(@RequestParam(defaultValue = "true") boolean mode) {
+        String localMessage = "Your lucky ";
         numGen();
-        funny(text);
-        return animal() + textUsr;
+        if(mode){
+            localMessage += "animal is : "+ animal() + " !";
+        }else{
+            localMessage += "number is : "+ num + " !";
+        }
+        return localMessage;
 
     }
+
     public void numGen(){
         num = (int)Math.floor(Math.random() * 10);
     }
     public String animal(){
         return animals[num];
-    }
-    public String funny(String t){
-        return textUsr = " " + t + " ROLIGT !!! ";
-
     }
 }
