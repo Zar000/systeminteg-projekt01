@@ -15,7 +15,11 @@ import java.util.Properties;
 public class Repository {
     private Connection con;
     private Properties p = new Properties();
+    private String dbUrl = "jdbc:mysql://localhost:3306/webbshop?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
+    private String dbuUser = "root";
+    private String dbPassword = "secret";
 
+    // Det vart super konstigt & krångligt så det funkade inte alls
     public Repository() {
 //        try{InputStream in = getClass().getResourceAsStream("Settings.properties");
 //            p.load(in);
@@ -51,9 +55,7 @@ public class Repository {
         // Jag vet att detta ser hemskt ut men det fungerade verkligen inte med Settings.properties varesig den var i
         // samma filepath some Repository eller om den var i resources foldern.
         // Provade att ange path som du gjort i dina exempel repositories och har också provat den lösning som finns längre upp
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/webbshop?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true",
-                                                        "root",
-                                                    "secret")){
+        try (Connection con = DriverManager.getConnection(dbUrl,dbuUser,dbPassword);){
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, brandName);
             stmt.setString(2, itemColor);

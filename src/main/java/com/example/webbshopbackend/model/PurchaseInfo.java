@@ -24,5 +24,10 @@ public class PurchaseInfo {
         this.brand = brand;
         this.quantity = quantity;
     }
+    @Override
+    public String toString(){
+        return firstName + " " + lastName + " bought " + quantity + " " +
+                itemColor + " " + itemSize + " " + itemName + " from " + brand+"\n";
+    }
 
 }
