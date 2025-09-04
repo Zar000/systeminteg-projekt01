@@ -17,37 +17,35 @@ public class Repository {
     private Properties p = new Properties();
 
     public Repository() {
-        try{InputStream in = getClass().getResourceAsStream("Settings.properties");
-            p.load(in);
-            System.out.println(in);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+//        try{InputStream in = getClass().getResourceAsStream("Settings.properties");
+//            p.load(in);
+//            System.out.println(in);
+//        }
+//        catch(Exception e){
+//            e.printStackTrace();
+//        }
     }
 
     public List<PurchaseInfo> getWhoBoughtWhat(String itemName, String itemSize, String itemColor, String brandName) throws SQLException {
         List<PurchaseInfo> results = new ArrayList<>();
-                String sql = """
-                select 
-                    c.name as firstName,
-                    c.lastname as lastName,
-                    i.name as itemName,
-                    i.size as itemSize,
-                    i.color as itemColor,
-                    b.name as brand,
-                    oi.count as quantity
-                from customer c
-                join orders o on c.id = o.customerId
-                join orderItems oi on o.id = oi.orderId
-                join item i on oi.itemId = i.id
-                join brand b on i.brand = b.id
-                where b.name = ? 
-                  and i.color = ? 
-                  and i.name like ? 
-                  and i.size = ?
-                order by quantity desc;
-                """;
+                String sql = "select \n" +
+                        "    c.name as firstName,\n" +
+                        "    c.lastname as lastName,\n" +
+                        "    i.name as itemName,\n" +
+                        "    i.size as itemSize,\n" +
+                        "    i.color as itemColor,\n" +
+                        "    b.name as brand,\n" +
+                        "    oi.count as quantity\n" +
+                        "from customer c\n" +
+                        "join orders o on c.id = o.customerId\n" +
+                        "join orderItems oi on o.id = oi.orderId\n" +
+                        "join item i on oi.itemId = i.id\n" +
+                        "join brand b on i.brand = b.id\n" +
+                        "where b.name = ?" +
+                        "  and i.color = ?" +
+                        "  and i.name like ?" +
+                        "  and i.size = ?" +
+                        "order by quantity desc;";
 
 
         // Jag vet att detta ser hemskt ut men det fungerade verkligen inte med Settings.properties varesig den var i
@@ -62,7 +60,7 @@ public class Repository {
             stmt.setString(3, "%" + itemName + "%");
             stmt.setString(4, itemSize);
 
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 results.add(new PurchaseInfo(
